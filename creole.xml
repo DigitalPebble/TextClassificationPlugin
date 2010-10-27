@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<CREOLE-DIRECTORY>
+
+    <CREOLE>
+      <RESOURCE>
+      <NAME>TrainingCorpusCreator</NAME>
+      <CLASS>com.digitalpebble.gate.textclassification.TrainingCorpusCreatorPR</CLASS>
+      <JAR>TextClassificationPR-1.0.jar</JAR>
+      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
+      <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
+      <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
+      <PARAMETER NAME="textAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="textAnnotationValue" RUNTIME="true" DEFAULT="lang" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="componentAnnotationType" RUNTIME="true" DEFAULT="Token" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="componentAnnotationValue" RUNTIME="true" DEFAULT="string" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="parameters" RUNTIME="true" DEFAULT="-s 0 -t 0" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="minDocThreshold" RUNTIME="true" DEFAULT="0" OPTIONAL="false">java.lang.Integer</PARAMETER>
+      <PARAMETER NAME="topNAttributes" RUNTIME="true" DEFAULT="-1" OPTIONAL="true">java.lang.Integer</PARAMETER>
+      <PARAMETER NAME="weightingScheme" RUNTIME="true" DEFAULT="frequency" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="directory" RUNTIME="false" DEFAULT="" OPTIONAL="false">java.net.URL</PARAMETER>
+      <PARAMETER NAME="reinitModel" RUNTIME="true" DEFAULT="true" OPTIONAL="false">java.lang.Boolean</PARAMETER>
+      <ICON>/dipe.png</ICON>
+    </RESOURCE>
+  </CREOLE>
+
+  <CREOLE>
+      <RESOURCE>
+      <NAME>Classifier</NAME>
+      <CLASS>com.digitalpebble.gate.textclassification.ClassifierPR</CLASS>
+      <JAR>TextClassificationPR-1.0.jar</JAR>
+      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
+      <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
+	  <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="textAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="textAnnotationValue" RUNTIME="true" DEFAULT="lang" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="componentAnnotationType" RUNTIME="true" DEFAULT="Token" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="componentAnnotationValue" RUNTIME="true" DEFAULT="string" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="resourceDir" RUNTIME="false" DEFAULT="" OPTIONAL="false">java.net.URL</PARAMETER>
+      <ICON>/dipe.png</ICON>
+    </RESOURCE>
+  </CREOLE>
+  
+  <CREOLE>
+      <RESOURCE>
+      <NAME>NGram maker</NAME>
+      <CLASS>com.digitalpebble.gate.textclassification.NGram</CLASS>
+      <JAR>TextClassificationPR-1.0.jar</JAR>
+      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
+      <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
+	  <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="outputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="inputAnnotationType" RUNTIME="true" DEFAULT="Feature" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="outputAnnotationType" RUNTIME="true" DEFAULT="Feature2" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="spanAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="inputAnnotationFeature" RUNTIME="true" DEFAULT="label" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="outputAnnotationFeature" RUNTIME="true" DEFAULT="label" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="generateIntermediateAnnotations" RUNTIME="true" DEFAULT="true" OPTIONAL="false">java.lang.Boolean</PARAMETER>
+	  <PARAMETER NAME="ngram" RUNTIME="true" DEFAULT="2" OPTIONAL="false">java.lang.Integer</PARAMETER>
+	  <PARAMETER NAME="window" RUNTIME="true" DEFAULT="-1" OPTIONAL="false">java.lang.Integer</PARAMETER>
+      <ICON>/dipe.png</ICON>
+    </RESOURCE>
+  </CREOLE>
+  
+ 
+</CREOLE-DIRECTORY>
