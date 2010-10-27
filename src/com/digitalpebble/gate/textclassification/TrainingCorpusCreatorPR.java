@@ -70,11 +70,8 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 	private String componentAnnotationValue;
 	private URL directory;
 	private FileTrainingCorpus trainingcorpus;
-	private String parameters;
-	private Integer minDocThreshold;
-	private Integer topNAttributes;
 	private String weightingScheme;
-	private Boolean reinitModel;
+	private Boolean reinitCorpus = true;
 	private String implementation = Learner.LibSVMModelCreator;
 
 	/*
@@ -87,20 +84,22 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		// be throw an exception if the value for any of the
 		// mandatory parameters is not provided
 		// check that a modelLocation has been selected
-		if (directory == null)
+		if (directory == null || "".equals(directory))
 			throw new ResourceInstantiationException(
-					"directory is required to store the data and cannot be null");
+					"directory is required to store the data and cannot be null or empty");
 		// it is not null, check it is a file: URL
 		if (!"file".equals(directory.getProtocol())) {
 			throw new ResourceInstantiationException(
 					"directory must be a file: URL");
 		}
+		
 		// initializes the modelCreator
 		String pathDirectory = new File(URI.create(directory.toExternalForm()))
 				.getAbsolutePath();
+		
 		try {
 			this.creator = Learner.getLearner(pathDirectory, implementation,
-					reinitModel);
+					reinitCorpus);
 			this.trainingcorpus = creator.getFileTrainingCorpus();
 		} catch (Exception e) {
 			throw new ResourceInstantiationException(e);
@@ -108,7 +107,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 
 		fireProcessFinished();
 
-		System.out.println("ModelCreator reinitialised");
+		System.out.println("CorpusCreator reinitialised");
 
 		return this;
 	}
@@ -125,7 +124,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 
 		// reinitialise the model if necessary
 		int positionDoc = corpus.indexOf(document);
-		if (positionDoc == 0 && getReinitModel().booleanValue())
+		if (positionDoc == 0 && getReinitCorpus().booleanValue())
 			try {
 				reInit();
 			} catch (ResourceInstantiationException e1) {
@@ -143,9 +142,9 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 			System.err.println("There are no annotations of type "
 					+ textAnnotationType + " available in document!");
 		}
-		Iterator iterator = textAS.iterator();
+		Iterator<Annotation> iterator = textAS.iterator();
 		while (iterator.hasNext()) {
-			Annotation annotation = (Annotation) iterator.next();
+			Annotation annotation = iterator.next();
 			// find out the feature of type textAnnotationValue
 			// e.g a sentence
 			FeatureMap features = annotation.getFeatures();
@@ -183,6 +182,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 			}
 			if (values.length == 0)
 				continue;
+			// creates a simple document
 			Document newDocument = creator.createDocument(values, textAV);
 			try {
 				this.trainingcorpus.addDocument(newDocument);
@@ -195,20 +195,11 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		fireProgressChanged((100 * positionDoc) / corpus.size());
 		// do we trigger the learning?
 		if (positionDoc == corpus.size() - 1) {
-			fireStatusChanged("Training the Engine");
-			fireProgressChanged(0);
+			fireStatusChanged("Saving the Lexicon");
 			try {
-				// initialisation learner
-				this.creator.setParameters(getParameters());
 				WeightingMethod method = Parameters.WeightingMethod
 						.methodFromString(getWeightingScheme());
 				this.creator.setMethod(method);
-				this.creator.pruneTermsDocFreq(getMinDocThreshold().intValue(),
-						Integer.MAX_VALUE);
-				if (this.topNAttributes != null)
-					this.creator.keepTopNAttributesLLR(this.topNAttributes
-							.intValue());
-				// this.creator.learn(trainingcorpus);
 				trainingcorpus.close();
 				creator.saveLexicon();
 			} catch (Exception e) {
@@ -291,30 +282,6 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		this.directory = directoryLocation;
 	}
 
-	public Integer getMinDocThreshold() {
-		return minDocThreshold;
-	}
-
-	public Integer getTopNAttributes() {
-		return topNAttributes;
-	}
-
-	public void setTopNAttributes(Integer topNAttributes) {
-		this.topNAttributes = topNAttributes;
-	}
-
-	public void setMinDocThreshold(Integer minDocThreshold) {
-		this.minDocThreshold = minDocThreshold;
-	}
-
-	public String getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(String params) {
-		parameters = params;
-	}
-
 	public String getWeightingScheme() {
 		return weightingScheme;
 	}
@@ -323,12 +290,12 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		this.weightingScheme = weightingScheme;
 	}
 
-	public Boolean getReinitModel() {
-		return reinitModel;
+	public Boolean getReinitCorpus() {
+		return reinitCorpus;
 	}
 
-	public void setReinitModel(Boolean reinitModel) {
-		this.reinitModel = reinitModel;
+	public void setReinitCorpus(Boolean reinitCorpus) {
+		this.reinitCorpus = reinitCorpus;
 	}
 
 	public String getImplementation() {

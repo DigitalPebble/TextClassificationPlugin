@@ -7,6 +7,10 @@ Installation
 Unzip the distribution archive into GATE/plugins or to the directory of your choice then load it using GATE's plugin management panel
 
 Usage
-
+The plugins contains 3 Processing resources :
+- TrainingCorpusCreator : generates a lexicon + raw file in the specified directory. See https://code.google.com/p/textclassification/ for instructions on 
+how to generate a vector file and model from a raw file.
+- ClassifierPR : takes a model and lexicon to classify the annotations specified in textAnnotationType
+- NGram maker : generates ngrams that can be used as input for the corpus generation or classification
 
 

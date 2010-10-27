@@ -71,7 +71,7 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 	 */
 	private String componentAnnotationValue;
 
-	private URL resourceDir;
+	private URL modelDir;
 
 	/*
 	 * this method gets called whenever an object of this class is created
@@ -83,17 +83,17 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 		// be throw an exception if the value for any of the
 		// mandatory parameters is not provided
 		// check that a modelLocation has been selected
-		if (resourceDir == null)
+		if (modelDir == null)
 			throw new ResourceInstantiationException(
 					"resourceDir is required to store the learned model and cannot be null");
 		// it is not null, check it is a file: URL
-		if (!"file".equals(resourceDir.getProtocol())) {
+		if (!"file".equals(modelDir.getProtocol())) {
 			throw new ResourceInstantiationException(
 					"resourceDir must be a file: URL");
 		}
 		// initializes the modelCreator
 		try {
-			String pathresourceDir = new File(URI.create(resourceDir
+			String pathresourceDir = new File(URI.create(modelDir
 					.toExternalForm())).getAbsolutePath();
 			this.applier = TextClassifier.getClassifier(pathresourceDir);
 		} catch (Exception e) {
@@ -264,11 +264,11 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 		this.textAnnotationValue = textAnnotationValue;
 	}
 
-	public URL getResourceDir() {
-		return resourceDir;
+	public URL getModelDir() {
+		return modelDir;
 	}
 
-	public void setResourceDir(URL resourceDir) {
-		this.resourceDir = resourceDir;
+	public void setResourceDir(URL modelDir) {
+		this.modelDir = modelDir;
 	}
 }
