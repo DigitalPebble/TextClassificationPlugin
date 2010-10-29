@@ -49,27 +49,27 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 	 * Text Annotation Type (e.g. Sentence) For which a separate text
 	 * classification document is created
 	 */
-	private String textAnnotationType;
+	private String labelAnnotationType;
 
 	/**
-	 * Text Annotation Value (e.g. lang) The value of this feature is used as a
+	 * Label Annotation Value (e.g. lang) The value of this feature is used as a
 	 * label
 	 */
-	private String textAnnotationValue;
+	private String labelAnnotationValue;
 
-	private String textAnnotationScore = "_score";
+	private String labelAnnotationScore = "_score";
 
 	/**
 	 * Component Annotation Value (e.g. token) The annotation is considered to
 	 * obtain feature values
 	 */
-	private String componentAnnotationType;
+	private String attributeAnnotationType;
 
 	/**
 	 * ComponentAnnotationValue (e.g. form) The value of this feature is
 	 * considered as a value for the features
 	 */
-	private String componentAnnotationValue;
+	private String attributeAnnotationValue;
 
 	private URL modelDir;
 
@@ -122,17 +122,17 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 				|| inputAnnotationSet.trim().length() == 0 ? document
 				.getAnnotations() : document.getAnnotations(inputAnnotationSet);
 		// obtain annotations of type textAnnotationType
-		AnnotationSet textAS = inputAS.get(textAnnotationType);
+		AnnotationSet textAS = inputAS.get(labelAnnotationType);
 		if (textAS == null || textAS.isEmpty()) {
 			System.err.println("There are no annotations of type "
-					+ textAnnotationType + " available in document!");
+					+ labelAnnotationType + " available in document!");
 		}
 		Iterator iterator = textAS.iterator();
 		while (iterator.hasNext()) {
 			Annotation annotation = (Annotation) iterator.next();
 			// obtain the underlying annotations
 			AnnotationSet underlyingAS = obtainUnderlyingAnnotations(inputAS,
-					annotation, componentAnnotationType);
+					annotation, attributeAnnotationType);
 			if (underlyingAS == null || underlyingAS.isEmpty()) {
 				continue;
 			}
@@ -140,7 +140,7 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 			Iterator iter = underlyingAS.iterator();
 			while (iter.hasNext()) {
 				Annotation annot = (Annotation) iter.next();
-				if (annot.getFeatures().containsKey(componentAnnotationValue)) {
+				if (annot.getFeatures().containsKey(attributeAnnotationValue)) {
 					list.add(annot);
 				}
 			}
@@ -154,7 +154,7 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 			for (int i = 0; i < list.size(); i++) {
 				Annotation annot = (Annotation) list.get(i);
 				values[i] = (String) annot.getFeatures().get(
-						componentAnnotationValue);
+						attributeAnnotationValue);
 			}
 			Document newDocument = this.applier.createDocument(values);
 			double[] scores = new double[labels.length];
@@ -174,9 +174,9 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 			// create a new label for this entity
 			// find out the feature of type textAnnotationValue
 			annotation.getFeatures()
-					.put(textAnnotationValue, labels[bestlabel]);
+					.put(labelAnnotationValue, labels[bestlabel]);
 			annotation.getFeatures().put(
-					textAnnotationValue + textAnnotationScore,
+					labelAnnotationValue + labelAnnotationScore,
 					new Double(bestscore));
 		}
 		fireProcessFinished();
@@ -210,34 +210,34 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 	private void checkParameters() throws ExecutionException {
 		if (document == null)
 			throw new ExecutionException("Document is null!");
-		if (textAnnotationType == null
-				|| textAnnotationType.trim().length() == 0)
+		if (labelAnnotationType == null
+				|| labelAnnotationType.trim().length() == 0)
 			throw new ExecutionException("TextAnnotationType is null!");
-		if (textAnnotationValue == null
-				|| textAnnotationValue.trim().length() == 0)
+		if (labelAnnotationValue == null
+				|| labelAnnotationValue.trim().length() == 0)
 			throw new ExecutionException("TextAnnotationValue is null!");
-		if (componentAnnotationType == null
-				|| componentAnnotationType.trim().length() == 0)
+		if (attributeAnnotationType == null
+				|| attributeAnnotationType.trim().length() == 0)
 			throw new ExecutionException("componentAnnotationType is null!");
-		if (componentAnnotationValue == null
-				|| componentAnnotationValue.trim().length() == 0)
+		if (attributeAnnotationValue == null
+				|| attributeAnnotationValue.trim().length() == 0)
 			throw new ExecutionException("componentAnnotationValue is null!");
 	}
 
-	public String getComponentAnnotationType() {
-		return componentAnnotationType;
+	public String getAttributeAnnotationType() {
+		return attributeAnnotationType;
 	}
 
-	public void setComponentAnnotationType(String componentAnnotationType) {
-		this.componentAnnotationType = componentAnnotationType;
+	public void setAttributeAnnotationType(String componentAnnotationType) {
+		this.attributeAnnotationType = componentAnnotationType;
 	}
 
-	public String getComponentAnnotationValue() {
-		return componentAnnotationValue;
+	public String getAttributeAnnotationValue() {
+		return attributeAnnotationValue;
 	}
 
-	public void setComponentAnnotationValue(String componentAnnotationValue) {
-		this.componentAnnotationValue = componentAnnotationValue;
+	public void setAttributeAnnotationValue(String componentAnnotationValue) {
+		this.attributeAnnotationValue = componentAnnotationValue;
 	}
 
 	public String getInputAnnotationSet() {
@@ -248,20 +248,20 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 		this.inputAnnotationSet = inputAnnotationSet;
 	}
 
-	public String getTextAnnotationType() {
-		return textAnnotationType;
+	public String getLabelAnnotationType() {
+		return labelAnnotationType;
 	}
 
-	public void setTextAnnotationType(String textAnnotationType) {
-		this.textAnnotationType = textAnnotationType;
+	public void setLabelAnnotationType(String textAnnotationType) {
+		this.labelAnnotationType = textAnnotationType;
 	}
 
-	public String getTextAnnotationValue() {
-		return textAnnotationValue;
+	public String getLabelAnnotationValue() {
+		return labelAnnotationValue;
 	}
 
-	public void setTextAnnotationValue(String textAnnotationValue) {
-		this.textAnnotationValue = textAnnotationValue;
+	public void setLabelAnnotationValue(String textAnnotationValue) {
+		this.labelAnnotationValue = textAnnotationValue;
 	}
 
 	public URL getModelDir() {

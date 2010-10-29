@@ -49,25 +49,23 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 	 */
 	private String inputAnnotationSet;
 	/**
-	 * Text Annotation Type (e.g. Sentence) For which a separate text
+	 * Label Annotation Type (e.g. Sentence) For which a separate text
 	 * classification document is created
 	 */
-	private String textAnnotationType;
+	private String labelAnnotationType;
 	/**
-	 * Text Annotation Value (e.g. lang) The value of this feature is used as a
+	 * Label Annotation Value (e.g. lang) The value of this feature is used as a
 	 * label
 	 */
-	private String textAnnotationValue;
+	private String labelAnnotationValue;
 	/**
-	 * Component Annotation Value (e.g. token) The annotation is considered to
-	 * obtain feature values
+	 * Attribute Annotation Type (e.g. token) The annotation type used for the ML attributes.
 	 */
-	private String componentAnnotationType;
+	private String attributeAnnotationType;
 	/**
-	 * ComponentAnnotationValue (e.g. form) The value of this feature is
-	 * considered as a value for the features
+	 * ComponentAnnotationValue (e.g. form) The feature value used for the ML attributes.
 	 */
-	private String componentAnnotationValue;
+	private String attributeAnnotationValue;
 	private URL directory;
 	private FileTrainingCorpus trainingcorpus;
 	private String weightingScheme;
@@ -137,10 +135,10 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 				|| inputAnnotationSet.trim().length() == 0 ? document
 				.getAnnotations() : document.getAnnotations(inputAnnotationSet);
 		// obtain annotations of type textAnnotationType
-		AnnotationSet textAS = inputAS.get(textAnnotationType);
+		AnnotationSet textAS = inputAS.get(labelAnnotationType);
 		if (textAS == null || textAS.isEmpty()) {
 			System.err.println("There are no annotations of type "
-					+ textAnnotationType + " available in document!");
+					+ labelAnnotationType + " available in document!");
 		}
 		Iterator<Annotation> iterator = textAS.iterator();
 		while (iterator.hasNext()) {
@@ -148,7 +146,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 			// find out the feature of type textAnnotationValue
 			// e.g a sentence
 			FeatureMap features = annotation.getFeatures();
-			String textAV = (String) features.get(textAnnotationValue);
+			String textAV = (String) features.get(labelAnnotationValue);
 			if (textAV == null) {
 				continue;
 			}
@@ -157,7 +155,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 					.getOffset(), annotation.getEndNode().getOffset());
 			if (set.isEmpty())
 				continue;
-			AnnotationSet underlyingAS = set.get(componentAnnotationType);
+			AnnotationSet underlyingAS = set.get(attributeAnnotationType);
 			if (underlyingAS.isEmpty())
 				continue;
 
@@ -165,7 +163,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 			Iterator<Annotation> iter = underlyingAS.iterator();
 			while (iter.hasNext()) {
 				Annotation annot = iter.next();
-				if (annot.getFeatures().containsKey(componentAnnotationValue)) {
+				if (annot.getFeatures().containsKey(attributeAnnotationValue)) {
 					list.add(annot);
 				}
 			}
@@ -178,7 +176,7 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 			for (int i = 0; i < list.size(); i++) {
 				Annotation annot = (Annotation) list.get(i);
 				values[i] = (String) annot.getFeatures().get(
-						componentAnnotationValue);
+						attributeAnnotationValue);
 			}
 			if (values.length == 0)
 				continue;
@@ -218,36 +216,36 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 	private void checkParameters() throws ExecutionException {
 		if (document == null)
 			throw new ExecutionException("Document is null!");
-		if (textAnnotationType == null
-				|| textAnnotationType.trim().length() == 0)
+		if (labelAnnotationType == null
+				|| labelAnnotationType.trim().length() == 0)
 			throw new ExecutionException("TextAnnotationType is null!");
-		if (textAnnotationValue == null
-				|| textAnnotationValue.trim().length() == 0)
+		if (labelAnnotationValue == null
+				|| labelAnnotationValue.trim().length() == 0)
 			throw new ExecutionException("TextAnnotationValue is null!");
-		if (componentAnnotationType == null
-				|| componentAnnotationType.trim().length() == 0)
+		if (attributeAnnotationType == null
+				|| attributeAnnotationType.trim().length() == 0)
 			throw new ExecutionException("componentAnnotationType is null!");
-		if (componentAnnotationValue == null
-				|| componentAnnotationValue.trim().length() == 0)
+		if (attributeAnnotationValue == null
+				|| attributeAnnotationValue.trim().length() == 0)
 			throw new ExecutionException("componentAnnotationValue is null!");
 		// check weighting scheme
 		Parameters.WeightingMethod.methodFromString(getWeightingScheme());
 	}
 
-	public String getComponentAnnotationType() {
-		return componentAnnotationType;
+	public String getAttributeAnnotationType() {
+		return attributeAnnotationType;
 	}
 
-	public void setComponentAnnotationType(String componentAnnotationType) {
-		this.componentAnnotationType = componentAnnotationType;
+	public void setAttributeAnnotationType(String componentAnnotationType) {
+		this.attributeAnnotationType = componentAnnotationType;
 	}
 
-	public String getComponentAnnotationValue() {
-		return componentAnnotationValue;
+	public String getAttributeAnnotationValue() {
+		return attributeAnnotationValue;
 	}
 
-	public void setComponentAnnotationValue(String componentAnnotationValue) {
-		this.componentAnnotationValue = componentAnnotationValue;
+	public void setAttributeAnnotationValue(String componentAnnotationValue) {
+		this.attributeAnnotationValue = componentAnnotationValue;
 	}
 
 	public String getInputAnnotationSet() {
@@ -258,20 +256,20 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		this.inputAnnotationSet = inputAnnotationSet;
 	}
 
-	public String getTextAnnotationType() {
-		return textAnnotationType;
+	public String getLabelAnnotationType() {
+		return labelAnnotationType;
 	}
 
-	public void setTextAnnotationType(String textAnnotationType) {
-		this.textAnnotationType = textAnnotationType;
+	public void setLabelAnnotationType(String textAnnotationType) {
+		this.labelAnnotationType = textAnnotationType;
 	}
 
-	public String getTextAnnotationValue() {
-		return textAnnotationValue;
+	public String getLabelAnnotationValue() {
+		return labelAnnotationValue;
 	}
 
-	public void setTextAnnotationValue(String textAnnotationValue) {
-		this.textAnnotationValue = textAnnotationValue;
+	public void setLabelAnnotationValue(String textAnnotationValue) {
+		this.labelAnnotationValue = textAnnotationValue;
 	}
 
 	public URL getDirectory() {
