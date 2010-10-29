@@ -125,7 +125,7 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 		AnnotationSet textAS = inputAS.get(labelAnnotationType);
 		if (textAS == null || textAS.isEmpty()) {
 			System.err.println("There are no annotations of type "
-					+ labelAnnotationType + " available in document!");
+					+ labelAnnotationType + " available in document "+document.getName());
 		}
 		Iterator iterator = textAS.iterator();
 		while (iterator.hasNext()) {
@@ -268,7 +268,7 @@ public class ClassifierPR extends AbstractLanguageAnalyser implements
 		return modelDir;
 	}
 
-	public void setResourceDir(URL modelDir) {
+	public void setModelDir(URL modelDir) {
 		this.modelDir = modelDir;
 	}
 }
