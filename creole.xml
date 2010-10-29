@@ -5,7 +5,7 @@
       <RESOURCE>
       <NAME>TrainingCorpusCreator</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.TrainingCorpusCreatorPR</CLASS>
-      <JAR>TextClassificationPR-1.0.jar</JAR>
+      <JAR>TextClassificationPlugin-1.0.jar</JAR>
       <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
@@ -25,7 +25,7 @@
       <RESOURCE>
       <NAME>Classifier</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.ClassifierPR</CLASS>
-      <JAR>TextClassificationPR-1.0.jar</JAR>
+      <JAR>TextClassificationPlugin-1.0.jar</JAR>
       <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
@@ -43,7 +43,7 @@
       <RESOURCE>
       <NAME>NGram maker</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.NGram</CLASS>
-      <JAR>TextClassificationPR-1.0.jar</JAR>
+      <JAR>TextClassificationPlugin-1.0.jar</JAR>
       <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
