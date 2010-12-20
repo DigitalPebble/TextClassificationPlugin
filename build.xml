@@ -14,7 +14,7 @@
 	<!-- Documentation directory -->
 	<property name="docDir" location="doc" />
 
-	<property name="jarFile" value="TextClassificationPlugin-${version}.jar" />
+	<property name="jarFile" value="${plugin.name}-${version}.jar" />
 
 	<fileset id="lib" dir="lib">
 		<include name="*.jar" />
@@ -97,16 +97,16 @@
 
 	<!-- Generates a zip for the distribution  -->
 	<target name="distrib" depends="jar">
-		<delete file="TextClassificationPlugin-${version}.zip" />
+		<delete file="${plugin.name}-${version}.zip" />
 		<delete dir="${dist.dir}" />
-		<mkdir dir="${dist.dir}/TextClassificationPlugin" />
-		<mkdir dir="${dist.dir}/TextClassificationPlugin/lib" />
-		<copy todir="${dist.dir}/TextClassificationPlugin/lib" includeEmptyDirs="false">
+		<mkdir dir="${dist.dir}/${plugin.name}" />
+		<mkdir dir="${dist.dir}/${plugin.name}/lib" />
+		<copy todir="${dist.dir}/${plugin.name}/lib" includeEmptyDirs="false">
 			<fileset dir="lib" />
 		</copy>
-		<copy file="${jarFile}" todir="${dist.dir}/TextClassificationPlugin" />
-		<copy file="creole.xml" todir="${dist.dir}/TextClassificationPlugin" />
-		<zip compress="true" casesensitive="yes" destfile="TextClassificationPlugin-${version}.zip">
+		<copy file="${jarFile}" todir="${dist.dir}/${plugin.name}" />
+		<copy file="creole.xml" todir="${dist.dir}/${plugin.name}" />
+		<zip compress="true" casesensitive="yes" destfile="${plugin.name}-${version}.zip">
 			<zipfileset dir="${dist.dir}" />
 		</zip>
 	</target>
