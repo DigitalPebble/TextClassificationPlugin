@@ -1,7 +1,7 @@
 Processing Resource for GATE which uses DigitalPebble's TextClassification API (https://code.google.com/p/textclassification/)
 
 Compilation
-Modify the file build.properties to point to the location of GATE, then run 'ant distrib'. 
+Run 'ant distrib'. The GATE compile dependencies are managed by IVY, you need an internet connection so that it can fetch the GATE jars.
 
 Installation
 Unzip the distribution archive into GATE/plugins or to the directory of your choice then load it using GATE's plugin management panel

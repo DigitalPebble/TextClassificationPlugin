@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="textclassification" default="all" basedir=".">
+<project name="textclassification" default="all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<description>
 	</description>
 	<!-- *******************************************************************
@@ -11,6 +11,38 @@
 	<!-- Allow overriding of properties via build.properties -->
 	<property file="build.properties" />
 
+	<property name="ivy.jar.dir" value="${user.home}/.ivy2/jars" />
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
+	<!-- ================================= 
+          target: load-ivy         
+            this target is not necessary if you put ivy.jar in your ant lib directory
+            if you already have ivy 2.0 in your ant lib, you can simply remove this
+            target
+         ================================= -->
+    <target name="load-ivy">
+    	<!-- try to load ivy here from home ivy dir, in case the user has not already dropped
+    	      it into ant's lib dir (note that the latter copy will always take precedence).
+    	      We will not fail as long as ivy home lib dir exists (it may be empty) and
+    	      ivy is in at least one of ant's lib dir or the ivy home lib dir. -->
+    	<mkdir dir="${ivy.jar.dir}" />
+    	<path id="ivy.lib.path">
+    	    <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+    	</path>
+    	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+    	          uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    </target>    
+
+    <!-- ================================= 
+          target: resolve              
+         ================================= -->
+    <target name="resolve" depends="clean-lib, load-ivy" description="--> resolve and retrieve dependencies with ivy">
+     	<!-- the call to resolve is not mandatory, retrieve makes an implicit call if we don't -->
+    	<ivy:resolve file="${ivy.file}"/>
+    	<ivy:retrieve pattern="${compile.lib.dir}/[artifact].[ext]" />
+    </target>
+
+
 	<!-- Documentation directory -->
 	<property name="docDir" location="doc" />
 
@@ -19,21 +51,14 @@
 	<fileset id="lib" dir="lib">
 		<include name="*.jar" />
 	</fileset>
-
-	<fileset id="gatelib.classpath" dir="${gate.home}/lib">
+	
+	<fileset id="compile.lib.dir" dir="${compile.lib.dir}">
 		<include name="*.jar" />
-		<include name="*.zip" />
-	</fileset>
-
-	<fileset id="gate.classpath" dir="${gate.home}/bin">
-		<include name="*.jar" />
-		<include name="*.zip" />
 	</fileset>
 
 	<path id="compile.classpath">
 		<fileset refid="lib" />
-		<fileset refid="gatelib.classpath" />
-		<fileset refid="gate.classpath" />
+		<fileset refid="compile.lib.dir" />
 	</path>
 
 	<!-- RUNTIME MEMORY -->
@@ -50,33 +75,24 @@
 	<!-- Sources -->
 	<property name="srcDir" location="src" />
 
-	<!-- Output directory for the build process -->
-	<property name="buildDir" location="build" />
-
 	<!-- Use the new 1.3+ compiler -->
 	<property name="build.compiler" value="modern" />
 
 	<!-- create build directory structure -->
-	<target name="prepare">
-		<mkdir dir="${buildDir}" />
+	<target name="prepare" depends="resolve">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${lib.dir}" />
 	</target>
 
 	<!-- Make documentation -->
 	<target name="javadoc">
-		<javadoc access="protected" destdir="${docDir}/javadoc" classpathref="compile.classpath" Encoding="UTF-8" Use="yes" Windowtitle="TextClassification JavaDoc" link="http://java.sun.com/j2se/1.5.0/docs/api/" docencoding="UTF-8" charset="UTF-8" source="1.5" useexternalfile="yes" breakiterator="true">
+		<javadoc access="protected" destdir="${docDir}/javadoc" classpathref="compile.classpath" Encoding="UTF-8" Use="yes" Windowtitle="${plugin.name} JavaDoc" link="http://java.sun.com/j2se/1.5.0/docs/api/" docencoding="UTF-8" charset="UTF-8" source="1.5" useexternalfile="yes" breakiterator="true">
 			<fileset dir="${srcDir}" />
 		</javadoc>
 	</target>
 
-	<!-- Clear all build output -->
-	<target name="clean">
-		<delete dir="${buildDir}" />
-		<delete dir="${dist.dir}" />
-		<delete file="${jarFile}" />
-	</target>
-
 	<target name="copy.resources" depends="prepare" description="copy non-.java files from src to build">
-		<copy todir="${buildDir}" includeEmptyDirs="true">
+		<copy todir="${build.dir}" includeEmptyDirs="true">
 			<fileset dir="${srcDir}" excludes="**/*.java" />
 		</copy>
 	</target>
@@ -85,13 +101,13 @@
 	<!-- This target compiles all the classes including debug information
 	-->
 	<target name="compile" description="compile the source " depends="prepare">
-		<!-- Compile the java code from ${srcDir} into ${buildDir} -->
-		<javac classpathref="compile.classpath" srcdir="${srcDir}" destdir="${buildDir}" encoding="UTF-8" source="1.5" target="1.5" debug="true" />
+		<!-- Compile the java code from ${srcDir} into ${build.dir} -->
+		<javac classpathref="compile.classpath" srcdir="${srcDir}" destdir="${build.dir}" encoding="UTF-8" source="1.5" target="1.5" debug="true" />
 	</target>
 
 	<target name="jar" depends="compile,copy.resources">
 		<jar destfile="${jarFile}" update="false" index="true">
-			<fileset dir="${buildDir}/" />
+			<fileset dir="${build.dir}/" />
 		</jar>
 	</target>
 
@@ -114,6 +130,30 @@
 	<!-- Everything! -->
 	<target name="all" depends="clean,jar">
 	</target>
+
+
+	<!-- ================================= 
+          target: clean-lib              
+         ================================= -->
+    <target name="clean-lib" description="--> clean the project libraries directory (dependencies)">
+        <delete includeemptydirs="true" dir="${compile.lib.dir}"/>
+    </target>
+
+    <!-- ================================= 
+          target: clean-build              
+         ================================= -->
+    <target name="clean-build" description="--> clean the project built files">
+        <delete includeemptydirs="true" dir="${build.dir}"/>
+    </target>
+
+    <!-- ================================= 
+          target: clean              
+         ================================= -->
+    <target name="clean" depends="clean-build, clean-lib" description="--> clean the project" >
+		<delete dir="${dist.dir}" />
+		<delete file="${jarFile}" />
+	</target>
+
 </project>
 
 
