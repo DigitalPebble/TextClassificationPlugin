@@ -46,8 +46,8 @@ public class NGram extends AbstractLanguageAnalyser implements
 	private Integer ngram;
 	private Boolean generateIntermediateAnnotations;
 	private Integer window;
-
 	private String spanAnnotationType;
+	private String ngramSeparator = "_";
 
 	public void execute() throws ExecutionException {
 
@@ -162,7 +162,7 @@ public class NGram extends AbstractLanguageAnalyser implements
 							temptemp.add(newString);
 						} else
 							for (String existing : tempAnnotationsStartingHere) {
-								String combination = existing + "_" + newString;
+								String combination = existing + getNgramSeparator() + newString;
 								temptemp.add(combination);
 
 								if (this.generateIntermediateAnnotations
@@ -239,7 +239,7 @@ public class NGram extends AbstractLanguageAnalyser implements
 						// take what is in the buffer
 						// and make a new annotation out of that
 						for (String s : tempAnnotationsStartingHere) {
-							String combination = s + "_" + newString;
+							String combination = s + getNgramSeparator() + newString;
 
 							// create an annotation for the combination
 							FeatureMap fm = Factory.newFeatureMap();
@@ -334,5 +334,13 @@ public class NGram extends AbstractLanguageAnalyser implements
 
 	public void setWindow(Integer window) {
 		this.window = window;
+	}
+
+	public String getNgramSeparator() {
+		return ngramSeparator;
+	}
+
+	public void setNgramSeparator(String ngramSeparator) {
+		this.ngramSeparator = ngramSeparator;
 	}
 }

@@ -5,7 +5,7 @@
       <RESOURCE>
       <NAME>TrainingCorpusCreator</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.TrainingCorpusCreatorPR</CLASS>
-      <JAR>TextClassificationPlugin-1.0.jar</JAR>
+      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
       <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
@@ -25,7 +25,7 @@
       <RESOURCE>
       <NAME>Classifier</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.ClassifierPR</CLASS>
-      <JAR>TextClassificationPlugin-1.0.jar</JAR>
+      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
       <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
@@ -43,7 +43,7 @@
       <RESOURCE>
       <NAME>NGram maker</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.NGram</CLASS>
-      <JAR>TextClassificationPlugin-1.0.jar</JAR>
+      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
       <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
@@ -54,6 +54,7 @@
 	  <PARAMETER NAME="spanAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>
 	  <PARAMETER NAME="inputAnnotationFeature" RUNTIME="true" DEFAULT="label" OPTIONAL="false">java.lang.String</PARAMETER>
 	  <PARAMETER NAME="outputAnnotationFeature" RUNTIME="true" DEFAULT="label" OPTIONAL="false">java.lang.String</PARAMETER>
+	  <PARAMETER NAME="ngramSeparator" RUNTIME="true" DEFAULT="_" OPTIONAL="false">java.lang.String</PARAMETER>
 	  <PARAMETER NAME="generateIntermediateAnnotations" RUNTIME="true" DEFAULT="true" OPTIONAL="false">java.lang.Boolean</PARAMETER>
 	  <PARAMETER NAME="ngram" RUNTIME="true" DEFAULT="2" OPTIONAL="false">java.lang.Integer</PARAMETER>
 	  <PARAMETER NAME="window" RUNTIME="true" DEFAULT="-1" OPTIONAL="false">java.lang.Integer</PARAMETER>
