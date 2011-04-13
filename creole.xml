@@ -5,8 +5,8 @@
       <RESOURCE>
       <NAME>TrainingCorpusCreator</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.TrainingCorpusCreatorPR</CLASS>
-      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>TextClassificationPlugin-1.2-dev.jar</JAR>
+      <JAR>lib/textclassification-1.6.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
       <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
@@ -17,6 +17,11 @@
       <PARAMETER NAME="weightingScheme" RUNTIME="true" DEFAULT="frequency" OPTIONAL="true">java.lang.String</PARAMETER>
       <PARAMETER NAME="directory" RUNTIME="false" DEFAULT="" OPTIONAL="false">java.net.URL</PARAMETER>
       <PARAMETER NAME="reinitCorpus" RUNTIME="false" DEFAULT="True" OPTIONAL="false">java.lang.Boolean</PARAMETER>
+      <!--  <PARAMETER NAME="" RUNTIME="" DEFAULT="" OPTIONAL="true">java.lang.Integer</PARAMETER>-->
+      <PARAMETER NAME="minFreq" RUNTIME="true" DEFAULT="1" OPTIONAL="true">java.lang.Integer</PARAMETER>
+      <PARAMETER NAME="maxFreq" RUNTIME="true" DEFAULT="2147483647" OPTIONAL="true">java.lang.Integer</PARAMETER>
+      <PARAMETER NAME="keepNBestAttributes" RUNTIME="true" DEFAULT="0" OPTIONAL="true">java.lang.Integer</PARAMETER>
+      <PARAMETER NAME="compactLexicon" RUNTIME="true" DEFAULT="True" OPTIONAL="true">java.lang.Boolean</PARAMETER>
       <ICON>/dipe.png</ICON>
     </RESOURCE>
   </CREOLE>
@@ -25,8 +30,8 @@
       <RESOURCE>
       <NAME>Classifier</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.ClassifierPR</CLASS>
-      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>TextClassificationPlugin-1.2-dev.jar</JAR>
+      <JAR>lib/textclassification-1.6.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
 	  <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
@@ -43,8 +48,8 @@
       <RESOURCE>
       <NAME>NGram maker</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.NGram</CLASS>
-      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>TextClassificationPlugin-1.2-dev.jar</JAR>
+      <JAR>lib/textclassification-1.6.1-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
 	  <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
