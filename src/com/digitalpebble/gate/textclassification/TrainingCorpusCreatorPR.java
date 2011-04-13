@@ -32,13 +32,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.digitalpebble.classification.Document;
 import com.digitalpebble.classification.FileTrainingCorpus;
 import com.digitalpebble.classification.Learner;
+import com.digitalpebble.classification.Lexicon;
 import com.digitalpebble.classification.Parameters;
+import com.digitalpebble.classification.TrainingCorpus;
 import com.digitalpebble.classification.Parameters.WeightingMethod;
 import com.digitalpebble.classification.RAMTrainingCorpus;
+import com.digitalpebble.classification.util.CorpusUtils;
+import com.digitalpebble.classification.util.scorers.AttributeScorer;
+import com.digitalpebble.classification.util.scorers.logLikelihoodAttributeScorer;
+import com.digitalpebble.classification.libsvm.Utils;
 
 public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		implements ProcessingResource {
@@ -66,11 +73,32 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 	 * ComponentAnnotationValue (e.g. form) The feature value used for the ML attributes.
 	 */
 	private String attributeAnnotationValue;
+	/**
+	 * Directory where lexicon, vector and raw model will be saved
+	 */
 	private URL directory;
-	private FileTrainingCorpus trainingcorpus;
+	/**
+	 * FEature weighting scheme
+	 */
 	private String weightingScheme;
+
+	private int minFreq=1;
+	private int maxFreq=Integer.MAX_VALUE;
+	/**
+	 * Run after prunning according to min and max freq
+	 */
+	private int keepNBestAttributes =0;
+	/**
+	 * Compact the lexicon after prunning
+	 */
+	boolean compactLexicon =true;
+	
 	private Boolean reinitCorpus = true;
+	
+	private FileTrainingCorpus trainingcorpus;
 	private String implementation = Learner.LibSVMModelCreator;
+	String pathDirectory;
+	private String libsvmVectorPath;
 
 	/*
 	 * this method gets called whenever an object of this class is created
@@ -92,8 +120,12 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		}
 		
 		// initializes the modelCreator
-		String pathDirectory = new File(URI.create(directory.toExternalForm()))
+		pathDirectory = new File(URI.create(directory.toExternalForm()))
 				.getAbsolutePath();
+		if(libsvmVectorPath == null || libsvmVectorPath.isEmpty()){
+			libsvmVectorPath = pathDirectory+File.separator+"vector"; 
+		}
+		
 		
 		try {
 			this.creator = Learner.getLearner(pathDirectory, implementation,
@@ -199,7 +231,28 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 						.methodFromString(getWeightingScheme());
 				this.creator.setMethod(method);
 				trainingcorpus.close();
+				Lexicon lexicon = creator.getLexicon();
 				creator.saveLexicon();
+				//prune by frequency
+				lexicon.pruneTermsDocFreq(minFreq, maxFreq);
+				//further keep only the N best attributes
+				if (keepNBestAttributes >0) {	
+					AttributeScorer scorer = logLikelihoodAttributeScorer.getScorer(
+							trainingcorpus, lexicon);
+					lexicon.setAttributeScorer(scorer);
+					lexicon.applyAttributeFilter(scorer, keepNBestAttributes);
+				} 
+				// change the indices of the attributes to remove 
+				// gaps between them
+				Map<Integer, Integer> equiv = null;
+				if (compactLexicon){
+					// create a new Lexicon object
+					equiv = lexicon.compact();
+				}
+				// save the modified lexicon file
+				lexicon.saveToFile(this.pathDirectory+"lexicon.compact");
+				Utils.writeExamples(trainingcorpus,lexicon,
+						this.libsvmVectorPath, equiv);
 			} catch (Exception e) {
 				throw new ExecutionException(e);
 			} finally {
