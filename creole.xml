@@ -17,7 +17,6 @@
       <PARAMETER NAME="weightingScheme" RUNTIME="true" DEFAULT="frequency" OPTIONAL="true">java.lang.String</PARAMETER>
       <PARAMETER NAME="directory" RUNTIME="false" DEFAULT="" OPTIONAL="false">java.net.URL</PARAMETER>
       <PARAMETER NAME="reinitCorpus" RUNTIME="false" DEFAULT="True" OPTIONAL="false">java.lang.Boolean</PARAMETER>
-      <!--  <PARAMETER NAME="" RUNTIME="" DEFAULT="" OPTIONAL="true">java.lang.Integer</PARAMETER>-->
       <PARAMETER NAME="minFreq" RUNTIME="true" DEFAULT="1" OPTIONAL="true">java.lang.Integer</PARAMETER>
       <PARAMETER NAME="maxFreq" RUNTIME="true" DEFAULT="2147483647" OPTIONAL="true">java.lang.Integer</PARAMETER>
       <PARAMETER NAME="keepNBestAttributes" RUNTIME="true" DEFAULT="0" OPTIONAL="true">java.lang.Integer</PARAMETER>

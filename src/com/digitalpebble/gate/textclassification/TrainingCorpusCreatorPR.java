@@ -82,16 +82,16 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 	 */
 	private String weightingScheme;
 
-	private int minFreq=1;
-	private int maxFreq=Integer.MAX_VALUE;
+	private Integer minFreq=1;
+	private Integer maxFreq=Integer.MAX_VALUE;
 	/**
 	 * Run after prunning according to min and max freq
 	 */
-	private int keepNBestAttributes =0;
+	private Integer keepNBestAttributes =0;
 	/**
 	 * Compact the lexicon after prunning
 	 */
-	boolean compactLexicon =true;
+	Boolean compactLexicon =true;
 	
 	private Boolean reinitCorpus = true;
 	
@@ -357,4 +357,44 @@ public class TrainingCorpusCreatorPR extends AbstractLanguageAnalyser
 		this.implementation = implementation;
 	}
 
+	public Learner getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Learner creator) {
+		this.creator = creator;
+	}
+
+	public Integer getMinFreq() {
+		return minFreq;
+	}
+
+	public void setMinFreq(Integer minFreq) {
+		this.minFreq = minFreq;
+	}
+
+	public Integer getMaxFreq() {
+		return maxFreq;
+	}
+
+	public void setMaxFreq(Integer maxFreq) {
+		this.maxFreq = maxFreq;
+	}
+
+	public Integer getKeepNBestAttributes() {
+		return keepNBestAttributes;
+	}
+
+	public void setKeepNBestAttributes(Integer keepNBestAttributes) {
+		this.keepNBestAttributes = keepNBestAttributes;
+	}
+
+	public Boolean getCompactLexicon() {
+		return compactLexicon;
+	}
+
+	public void setCompactLexicon(Boolean compactLexicon) {
+		this.compactLexicon = compactLexicon;
+	}
+	
 }
