@@ -3,6 +3,6 @@
 <ivy-module version="2.0">
 	<info organisation="${organisation}" module="${pluginName}" />
 	<dependencies defaultconf="*->*,!sources,!javadoc">
-	 <dependency org="uk.ac.gate" name="gate-core" rev="6.0"/>
+	 <dependency org="uk.ac.gate" name="gate-core" rev="7.0"/>
     </dependencies>
 </ivy-module>
