@@ -28,7 +28,6 @@
       <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
       <JAR>lib/hadoop-core-1.0.3-SNAPSHOT.jar</JAR>
       <JAR>lib/commons-configuration.jar</JAR>
-      <JAR>lib/core-default.xml</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
       <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
       <PARAMETER NAME="labelAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>

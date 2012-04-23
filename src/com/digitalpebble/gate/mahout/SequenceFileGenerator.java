@@ -9,6 +9,7 @@ import gate.creole.ExecutionException;
 import gate.util.OffsetComparator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -65,7 +66,9 @@ public class SequenceFileGenerator extends AbstractLanguageAnalyser implements
 		if (positionDoc == 0)
 			try {
 				Path path = new Path(this.outpath);
-				Configuration conf = new Configuration();
+				Configuration conf = new Configuration(true);
+				InputStream is = this.getClass().getClassLoader().getResourceAsStream("core-default.xml");
+				conf.addResource(is);
 				FileSystem fs = FileSystem.get(conf);
 				writer = new SequenceFile.Writer(fs, conf, path, Text.class,
 						Text.class);
