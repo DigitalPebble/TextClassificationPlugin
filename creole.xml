@@ -6,7 +6,7 @@
       <NAME>TrainingCorpusCreator</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.TrainingCorpusCreatorPR</CLASS>
       <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>lib/textclassification-1.6-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
       <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
@@ -21,31 +21,12 @@
     </RESOURCE>
   </CREOLE>
 
-<CREOLE>
-      <RESOURCE>
-      <NAME>SequenceFileGenerator</NAME>
-      <CLASS>com.digitalpebble.gate.mahout.SequenceFileGenerator</CLASS>
-      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/hadoop-core-1.0.3-SNAPSHOT.jar</JAR>
-      <JAR>lib/commons-configuration.jar</JAR>
-      <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
-      <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
-      <PARAMETER NAME="labelAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="labelAnnotationValue" RUNTIME="true" DEFAULT="lang" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="attributeAnnotationType" RUNTIME="true" DEFAULT="Token" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="attributeAnnotationValue" RUNTIME="true" DEFAULT="string" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="outpath" RUNTIME="true" DEFAULT="" OPTIONAL="false">java.lang.String</PARAMETER>
-      <ICON>/dipe.png</ICON>
-    </RESOURCE>
-  </CREOLE>
-
-
   <CREOLE>
       <RESOURCE>
       <NAME>Classifier</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.ClassifierPR</CLASS>
       <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>lib/textclassification-1.6-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
 	  <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
@@ -63,7 +44,7 @@
       <NAME>NGram maker</NAME>
       <CLASS>com.digitalpebble.gate.textclassification.NGram</CLASS>
       <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <JAR>lib/textclassification-1.4.1-SNAPSHOT.jar</JAR>
+      <JAR>lib/textclassification-1.6-SNAPSHOT.jar</JAR>
       <JAR>lib/liblinear-1.51-with-deps.jar</JAR>
       <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
 	  <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
