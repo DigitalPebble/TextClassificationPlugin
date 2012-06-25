@@ -75,22 +75,6 @@
       <ICON>/dipe.png</ICON>
     </RESOURCE>
   </CREOLE>
-  
-  <CREOLE>
-      <RESOURCE>
-      <NAME>SequenceFileGenerator</NAME>
-      <CLASS>com.digitalpebble.gate.textclassification.SequenceFileGenerator</CLASS>
-      <JAR>TextClassificationPlugin-1.1-dev.jar</JAR>
-      <PARAMETER NAME="document" RUNTIME="true">gate.Document</PARAMETER>
-      <PARAMETER NAME="inputAnnotationSet" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER>
-      <PARAMETER NAME="labelAnnotationType" RUNTIME="true" DEFAULT="Sentence" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="labelAnnotationValue" RUNTIME="true" DEFAULT="lang" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="attributeAnnotationType" RUNTIME="true" DEFAULT="Token" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="attributeAnnotationValue" RUNTIME="true" DEFAULT="string" OPTIONAL="false">java.lang.String</PARAMETER>
-      <PARAMETER NAME="outpath" RUNTIME="true" DEFAULT="" OPTIONAL="false">java.lang.String</PARAMETER>
-      <ICON>/dipe.png</ICON>
-    </RESOURCE>
-  </CREOLE>
 
  
 </CREOLE-DIRECTORY>
