@@ -1,4 +1,4 @@
-Processing Resource for GATE which uses DigitalPebble's TextClassification API (https://code.google.com/p/textclassification/)
+Processing Resource for GATE which uses DigitalPebble's TextClassification API (https://github.com/DigitalPebble/TextClassification/)
 
 Compilation
 Run 'ant distrib'. The GATE compile dependencies are managed by IVY, you need an internet connection so that it can fetch the GATE jars.
@@ -8,7 +8,7 @@ Unzip the distribution archive into GATE/plugins or to the directory of your cho
 
 Usage
 The plugins contains 3 Processing resources :
-- TrainingCorpusCreator : generates a lexicon + raw file in the specified directory. See https://code.google.com/p/textclassification/ for instructions on 
+- TrainingCorpusCreator : generates a lexicon + raw file in the specified directory. See https://github.com/DigitalPebble/TextClassification/ for instructions on 
 how to generate a vector file and model from a raw file.
 - ClassifierPR : takes a model and lexicon to classify the annotations specified in textAnnotationType
 - NGram maker : generates ngrams that can be used as input for the corpus generation or classification
